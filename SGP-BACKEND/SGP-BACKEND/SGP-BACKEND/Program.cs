@@ -46,8 +46,9 @@ builder.Services.AddRepositorios();
 var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
- 
 
+
+app.UseCors("OrigenesPermitidos");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

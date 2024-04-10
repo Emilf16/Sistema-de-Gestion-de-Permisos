@@ -1,26 +1,65 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <header>
+      <h2 @click="goHome()">Sistema de Gestión de Permisos</h2>
+    </header>
+
+    <main>
+      <router-view />
+    </main>
+
+    <footer class="footer bg-dark text-white">
+      <div class="container">
+        <p class="text">
+          Un sistema para gestionar permisos de usuarios. &copy;
+          {{ getCurrentYear() }} Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  methods: {
+    getCurrentYear() {
+      return new Date().getFullYear();
+    },
+    goHome() {
+      // Verificar si la ruta actual no es la raíz "/"
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+header h2 {
+  font-size: 1.5rem;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
 }
 </style>
