@@ -12,6 +12,7 @@ namespace SGP_SERVICIOS.Interfaces
     {
         Task<IEnumerable<PermisoDto>> GetPermisos(string descripcion);
         Task<OperationResult> GetPermisoPorId(int permisoId);
+        Task<OperationResult> DeletePermisoPorId(int permisoId);
         Task<OperationResult> CrearPermiso(PermisoDto permisoModel);
         Task<OperationResult> ActualizarPermiso(PermisoDto permisoModel, int permisoId); 
     }

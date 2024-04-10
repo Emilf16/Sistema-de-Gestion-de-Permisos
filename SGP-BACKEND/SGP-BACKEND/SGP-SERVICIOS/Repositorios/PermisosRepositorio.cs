@@ -76,6 +76,23 @@ namespace SGP_SERVICIOS.Repositorios
 
         }
 
+        public async Task<OperationResult> DeletePermisoPorId(int permisoId)
+        { 
+            var permiso = await _context.Permisos.Where(x => x.Id == permisoId).FirstOrDefaultAsync();
+
+            if (permiso == null)
+            { 
+                return new OperationResult(false, "Permiso no encontrado.", permisoId);
+            }
+
+            // Permiso found, proceed with deletion
+            _context.Permisos.Remove(permiso);
+            await _context.SaveChangesAsync();
+
+            // Deletion successful, return success message
+            return new OperationResult(true, "Permiso eliminado exitosamente.", permisoId);
+        }
+
         public async Task<OperationResult> GetPermisoPorId(int permisoId)
         {
             var permiso = await _context.Permisos.Where(x => x.Id == permisoId).Select(x => new PermisoDto

@@ -34,11 +34,15 @@
               </template>
               <template #cell(actions)="row">
                 <b-button
-                  @click="editItem(row.item.id)"
                   variant="primary"
-                  class="mr-2"
-                  >Editar</b-button
+                  @click="editItem(row.item.id)"
+                  class="mx-2"
                 >
+                  Editar
+                </b-button>
+                <b-button variant="danger" @click="openDeleteModal(row.item)">
+                  Eliminar
+                </b-button>
               </template>
               <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -47,6 +51,36 @@
                 </div>
               </template>
             </b-table>
+            <!-- MODAL DE CONFIRMACIÓN -->
+            <b-modal
+              ref="modal"
+              v-model="showDeleteModal"
+              no-footer
+              hide-header
+            >
+              <div class="d-flex justify-content-between mb-3">
+                <h4 class="text-left">¿Estás seguro?</h4>
+                <b-button variant="light" @click="hideDeleteModal()">
+                  <b-icon icon="x-lg" aria-hidden="true"></b-icon>
+                </b-button>
+              </div>
+              <p class="text-left">
+                Estás a punto de borrar el registro del permiso de
+                <strong>{{
+                  deleteItem.nombre + " " + deleteItem.apellido
+                }}</strong>
+                del día <strong>{{ formatearFecha(deleteItem.fecha) }}</strong
+                >.
+              </p>
+              <template #modal-footer>
+                <b-button variant="secondary" @click="hideDeleteModal()"
+                  >Cerrar</b-button
+                >
+                <b-button variant="danger" @click="deletePermiso()"
+                  >Eliminar</b-button
+                >
+              </template>
+            </b-modal>
           </b-card>
         </b-col>
       </b-row>
@@ -67,6 +101,14 @@ export default {
       headers: ["nombre", "apellido", "permiso", "fecha", "Actions"],
       nombre: "",
       cargandoPermisos: false,
+      showDeleteModal: false,
+      deleteItem: {
+        id: 0,
+        nombre: "",
+        apellido: "",
+        permiso: null,
+        fecha: "",
+      },
     };
   },
   async mounted() {
@@ -86,7 +128,6 @@ export default {
     async editItem(id) {
       this.$router.push(`/edit/${id}`);
     },
-
     goToCreateVue() {
       this.$router.push("/create");
     },
@@ -139,6 +180,31 @@ export default {
       }
 
       return retorno;
+    },
+    openDeleteModal(value) {
+      this.showDeleteModal = true;
+      Object.assign(this.deleteItem, value);
+    },
+    hideDeleteModal() {
+      this.showDeleteModal = false;
+    },
+    async deletePermiso() {
+      try {
+        // Realizar una solicitud Delete para actualizar el permiso
+        const response = await api.delete(
+          `/Permisos/Borrar/${this.deleteItem.id}`
+        );
+        if (response.data.success) {
+          this.$toast.success(response.data.message, toastProperties);
+
+          await this.getPermisos();
+        } else {
+          this.$toast.warning(response.data.message, toastProperties);
+        }
+      } catch (error) {
+        this.$toast.warning("Error al eliminar el permiso", toastProperties);
+      }
+      this.hideDeleteModal();
     },
   },
 };

@@ -59,6 +59,27 @@ namespace SGP_BACKEND.Controllers
         }
 
         /// <summary>
+        /// Permite borrar un permiso.
+        /// </summary>
+        /// <param name="id">Id del permiso a borrar.</param>
+        /// <returns>Operation result.</returns>
+        [HttpDelete("Borrar/{id}")]
+        public async Task<OperationResult> DeletePermisoPorId(int id)
+        {
+            try
+            {
+                var permiso = await _permisosRepositorio.DeletePermisoPorId(id);
+
+                return permiso;
+            }
+            catch (Exception ex)
+            {
+
+                return new OperationResult(false, ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Permite actualizar un permiso existente.
         /// </summary>
         /// <param name="id">Id del permiso a actualizar.</param>
