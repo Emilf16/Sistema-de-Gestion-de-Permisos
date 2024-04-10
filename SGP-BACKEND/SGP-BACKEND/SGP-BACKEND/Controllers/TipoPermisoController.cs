@@ -21,7 +21,7 @@ namespace SGP_BACKEND.Controllers
         /// <summary>
         /// Permite consultar todo los tipos de permisos disponibles.
         /// </summary>
-        /// <param nombre="nombre">Permite buscar por nombre,dejarlo vacio retorna todos</param>
+        /// <param name="nombre">Permite buscar por nombre,dejarlo vacio retorna todos</param>
         [HttpGet]
         public async Task<OperationResult> GetTiposPermiso(string? nombre)
         {
