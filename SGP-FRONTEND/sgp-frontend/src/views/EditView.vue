@@ -161,7 +161,7 @@ export default {
       this.permisoValid =
         this.permiso.permiso !== undefined && this.permiso.permiso !== null;
 
-      // Return true only if all fields are valid
+      // Retorno true si todos los campos estan validos
       return (
         this.nombreValid &&
         this.apellidoValid &&
