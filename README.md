@@ -9,8 +9,8 @@
 **2. Compilación del API .NET:**
 
 - Abra la solución `SGP-BACKEND/SGP-BACKEND/SGP-BACKEND.sln` en Visual Studio. 
-- Compilar el API `dotnet build`
-- Ejecutar el API `dotnet run`
+- Compilar el API abrir la terminal y ejecutar el comando `dotnet build`
+- Ejecutar el API abrir la terminal y ejecutar el comando`dotnet run`
 - Abra un navegador web y navegue a la dirección `https://localhost:7166/swagger/index.html`.
 - Debería ver la interfaz del Swagger.
 
